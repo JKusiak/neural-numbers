@@ -21,7 +21,7 @@ def replace_transparent_background(image):
     alpha1 = 0
     r2, g2, b2, alpha2 = 255, 255, 255, 255
 
-    red, green, blue, alpha = image_arr[:, :, 0], image_arr[:, :, 1], image_arr[:, :, 2], image_arr[:, :, 3]
+    alpha = image_arr[:, :, 3]
     mask = (alpha == alpha1)
     image_arr[:, :, :4][mask] = [r2, g2, b2, alpha2]
 
@@ -43,21 +43,22 @@ def pad_image(image):
     return ImageOps.expand(image, border=30, fill='#fff')
 
 
-def resize_image(image):
-    return image.resize((8, 8), Image.LINEAR)
+def to_grayscale(image):
+    return image.convert('L')
 
 
 def invert_colors(image):
     return ImageOps.invert(image)
 
 
+def resize_image(image):
+    return image.resize((8, 8), Image.LINEAR)
+
+
 def scale_down_intensity(image):
     image_arr = np.array(image)
     image_arr = exposure.rescale_intensity(image_arr, out_range=(0, 16))
     return Image.fromarray(image_arr)
-
-def to_grayscale(image):
-    return image.convert('L')
 
 
 def process_image(data_uri):

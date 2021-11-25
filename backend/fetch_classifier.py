@@ -1,7 +1,6 @@
 import pickle
 
-
-class ClassifierRepo:
+class FetchStoredClassifier:
     def __init__(self, storage):
         self.storage = storage
 
